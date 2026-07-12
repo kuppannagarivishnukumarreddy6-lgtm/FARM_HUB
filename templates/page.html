@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ripsil Automation Pvt Ltd – AI Agent Solutions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #06080f;
+      --surface: #0e1120;
+      --accent: #3b82f6;
+      --accent2: #06b6d4;
+      --text: #e8eaf0;
+      --muted: #7a7f99;
+      --border: rgba(255,255,255,0.07);
+      --glow: rgba(59,130,246,0.18);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 900px; height: 600px;
+      background: radial-gradient(ellipse, rgba(59,130,246,0.12) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 6%;
+      background: rgba(6,8,15,0.75);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 1.25rem;
+      letter-spacing: -0.5px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: 0.875rem;
+      font-weight: 400; letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--accent); color: #fff;
+      border: none; padding: 0.55rem 1.3rem;
+      border-radius: 6px; font-size: 0.875rem;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer; transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 8rem 6% 5rem;
+      position: relative; z-index: 1;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.25);
+      color: var(--accent2); font-size: 0.78rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.35rem 1rem; border-radius: 50px;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s ease both;
+    }
+    .badge span { width: 6px; height: 6px; background: var(--accent2); border-radius: 50%; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      font-weight: 800; line-height: 1.05;
+      letter-spacing: -2px;
+      animation: fadeUp 0.7s 0.1s ease both;
+    }
+    h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      margin-top: 1.5rem; max-width: 560px;
+      color: var(--muted); font-size: 1.05rem;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+    .hero-btns {
+      display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 0.7s 0.3s ease both;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff; padding: 0.85rem 2rem;
+      border: none; border-radius: 8px;
+      font-size: 0.95rem; font-family: 'DM Sans', sans-serif;
+      font-weight: 500; cursor: pointer;
+      box-shadow: 0 4px 24px rgba(59,130,246,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(59,130,246,0.45); }
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      padding: 0.85rem 2rem; border: 1px solid var(--border);
+      border-radius: 8px; font-size: 0.95rem;
+      font-family: 'DM Sans', sans-serif; cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--accent); background: rgba(59,130,246,0.05); }
+
+    .stats-bar {
+      display: flex; justify-content: center; gap: 3rem;
+      flex-wrap: wrap; margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+      animation: fadeUp 0.7s 0.4s ease both;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 2rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-label { color: var(--muted); font-size: 0.82rem; letter-spacing: 0.05em; margin-top: 0.2rem; }
+
+    section { position: relative; z-index: 1; }
+
+    .services { padding: 6rem 6%; background: var(--surface); }
+    .section-tag {
+      color: var(--accent2); font-size: 0.78rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 0.8rem; font-weight: 500;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800; letter-spacing: -1px;
+      margin-bottom: 1rem;
+    }
+    .section-sub { color: var(--muted); max-width: 480px; margin-bottom: 3rem; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+    .card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 2rem;
+      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+      cursor: default;
+    }
+    .card:hover {
+      border-color: rgba(59,130,246,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(59,130,246,0.1);
+    }
+    .card-icon {
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(6,182,212,0.15));
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 1.2rem;
+    }
+    .card h3 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.6rem; }
+    .card p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+
+    .how { padding: 6rem 6%; }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem; margin-top: 3rem;
+    }
+    .step { display: flex; flex-direction: column; gap: 0.8rem; }
+    .step-num {
+      font-family: 'Syne', sans-serif; font-size: 2.5rem;
+      font-weight: 800; line-height: 1;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .step h4 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; }
+    .step p { color: var(--muted); font-size: 0.88rem; }
+
+    .cta-section { padding: 6rem 6%; background: var(--surface); text-align: center; }
+    .cta-box {
+      max-width: 640px; margin: 0 auto;
+      background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(6,182,212,0.05));
+      border: 1px solid rgba(59,130,246,0.2);
+      border-radius: 20px; padding: 3.5rem 2.5rem;
+    }
+    .cta-box h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 800; margin-bottom: 1rem; letter-spacing: -0.5px;
+    }
+    .cta-box p { color: var(--muted); margin-bottom: 2rem; }
+
+    footer {
+      padding: 2rem 6%;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+      color: var(--muted); font-size: 0.82rem;
+      position: relative; z-index: 1;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      h1 { letter-spacing: -1px; }
+      .stats-bar { gap: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">Ripsil Automation</div>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#how">How It Works</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-cta">Get Started</button>
+  </nav>
+
+  <section class="hero">
+    <div class="badge"><span></span> AI-Powered Automation</div>
+    <h1>Build <em>Intelligent<br/>AI Agents</em> That<br/>Work For You</h1>
+    <p class="hero-sub">
+      Ripsil Automation Pvt Ltd delivers next-generation AI agent solutions that automate complex workflows, reduce costs, and accelerate your business.
+    </p>
+    <div class="hero-btns">
+      <button class="btn-primary">Start Your Project →</button>
+      <button class="btn-ghost">View Case Studies</button>
+    </div>
+    <div class="stats-bar">
+      <div class="stat"><div class="stat-num">150+</div><div class="stat-label">Projects Delivered</div></div>
+      <div class="stat"><div class="stat-num">98%</div><div class="stat-label">Client Satisfaction</div></div>
+      <div class="stat"><div class="stat-num">40×</div><div class="stat-label">Faster Workflows</div></div>
+      <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">AI Agent Uptime</div></div>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <p class="section-tag">What We Build</p>
+    <h2 class="section-title">Our Core Services</h2>
+    <p class="section-sub">End-to-end AI agent development tailored to your business needs.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🤖</div>
+        <h3>Custom AI Agents</h3>
+        <p>Intelligent agents designed for your unique processes — from customer support to complex data pipelines.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">⚙️</div>
+        <h3>Workflow Automation</h3>
+        <p>Replace repetitive manual tasks with smart automations that learn and improve over time.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <h3>Data Intelligence</h3>
+        <p>Extract insights from raw data using LLMs and advanced analytics agents.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔗</div>
+        <h3>API & Integration</h3>
+        <p>Seamlessly connect your existing tools, CRMs, ERPs, and databases with AI-powered middleware.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💬</div>
+        <h3>Conversational AI</h3>
+        <p>Build production-ready chatbots and voice agents for sales, HR, and internal operations.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🛡️</div>
+        <h3>AI Monitoring</h3>
+        <p>Real-time observability and guardrails to keep your agents safe, accurate, and compliant.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="how" id="how">
+    <p class="section-tag">Our Process</p>
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-sub">From discovery to deployment in four clear steps.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h4>Discovery Call</h4>
+        <p>We understand your workflows, pain points, and automation goals in a focused session.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h4>Agent Design</h4>
+        <p>Our team architects a tailored AI agent with the right models, tools, and integrations.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h4>Build & Test</h4>
+        <p>Rapid development with iterative testing to ensure reliability and accuracy.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h4>Deploy & Scale</h4>
+        <p>Go live with full monitoring, support, and continuous improvement built in.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section" id="contact">
+    <div class="cta-box">
+      <h2>Ready to Automate Your Business?</h2>
+      <p>Join 150+ companies already saving time and money with Ripsil AI agents.</p>
+      <button class="btn-primary" style="font-size:1rem; padding: 1rem 2.5rem;">
+        Book a Free Consultation →
+      </button>
+    </div>
+  </section>
+
+  <footer>
+    <div class="logo">Ripsil Automation</div>
+    <div>© 2026 Ripsil Automation Pvt Ltd. All rights reserved.</div>
+    <div>hello@ripsil.ai</div>
+  </footer>
+
+</body>
+</html>
